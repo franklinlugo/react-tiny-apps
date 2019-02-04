@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from './overmind';
+import { ClipLoader } from 'react-spinners';
 import { StyledApp, Header, Button, Posts, Post } from './Styles';
 
 class App extends Component {
@@ -22,8 +23,11 @@ class App extends Component {
       <StyledApp>
         <div className="inner">
           <Header>overmind state management</Header>
-          {overmind.state.appState}
-          <Button onClick={this.handleGetPosts}>Get posts</Button>
+          <Button onClick={this.handleGetPosts}>
+            {overmind.state.appState === 'loading' && <ClipLoader className="spinner" loading={true} sizeUnit={'px'} size={15} color={'#fff'} />}
+            {overmind.state.appState === 'error' && 'error'}
+            {overmind.state.appState === 'success' && 'Get posts'}
+          </Button>
           <Posts>{posts}</Posts>
         </div>
       </StyledApp>

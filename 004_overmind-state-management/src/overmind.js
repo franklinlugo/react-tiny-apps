@@ -1,22 +1,26 @@
 import { Overmind } from 'overmind';
 import { createConnect } from 'overmind-react';
-import { async } from 'rxjs/internal/scheduler/async';
 
 const overmind = new Overmind({
   state: {
-    appState: '',
+    appState: 'success',
     posts: [],
   },
   actions: {
     getPosts: async ({ state, effects }) => {
-      state.appState = 'loading';
-      state.posts = await effects.request('https://jsonplaceholder.typicode.com/posts');
-      state.appState = 'success';
+      try {
+        state.appState = 'loading';
+        state.posts = await effects.request('https://jsonplaceholder.typicode.com/posts');
+        state.appState = 'success';
+      } catch (err) {
+        state.appState = 'error';
+        console.error(err);
+      }
     },
     deletePost: params => {
       const { value, state } = params;
-      const _posts = [...state.posts.slice(0, value), ...state.posts.slice(value + 1)];
-      state.posts = _posts;
+      const posts = [...state.posts.slice(0, value), ...state.posts.slice(value + 1)];
+      state.posts = posts;
     },
   },
   effects: {

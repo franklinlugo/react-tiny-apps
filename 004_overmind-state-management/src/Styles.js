@@ -19,12 +19,19 @@ const Header = styled.header`
 `;
 
 const Button = styled.button`
+  position: relative;
   display: block;
+  width: 6rem;
+  height: 2rem;
   margin: 0 auto;
-  padding: 0.5rem 1.2rem;
   color: #fff;
   background-color: #4392f1;
   border: none;
+  div {
+    position: absolute;
+    top: calc(0.9rem - 7.5px);
+    left: calc(3rem - 7.5px);
+  }
 `;
 
 const Posts = styled.ul``;
